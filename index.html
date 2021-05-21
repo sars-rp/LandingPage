@@ -99,7 +99,7 @@
         <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
           <div class="icon-box">
             <div class="icon"><i class="ri-stack-line"></i></div>
-            <h4 class="title"><a href="">Official Parkings</a></h4>
+            <h4 class="title"><a href="#contact">Official Parkings</a></h4>
             <p class="description">Park at the nearest parking space</p>
           </div>
         </div>
@@ -107,7 +107,7 @@
         <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
           <div class="icon-box">
             <div class="icon"><i class="ri-palette-line"></i></div>
-            <h4 class="title"><a href="">Home Parkings</a></h4>
+            <h4 class="title"><a href="#contact">Home Parkings</a></h4>
             <p class="description">Park at the nearest legal home space</p>
           </div>
         </div>
@@ -115,7 +115,7 @@
         <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
           <div class="icon-box">
             <div class="icon"><i class="ri-command-line"></i></div>
-            <h4 class="title"><a href="">Rent Out Space and Earn Money</a></h4>
+            <h4 class="title"><a href="#contact">Rent Out Space and Earn Money</a></h4>
             <p class="description">Rent Out your Space and Earn Money</p>
           </div>
         </div>
@@ -165,7 +165,7 @@
 We have many other attractive features available in our app so stay tuned for further updates.
 
             </p>
-            <a href="#" class="btn-learn-more">Learn More</a>
+            <a href="#contact" class="btn-learn-more">Learn More</a>
           </div>
         </div>
 
@@ -861,7 +861,7 @@ We have many other attractive features available in our app so stay tuned for fu
               <div class="address">
                 <i class="bi bi-geo-alt"></i>
                 <h4>Location:</h4>
-                <p>Marathahalli Bangalore</p>
+                <p>Delhi, Bangalore</p>
               </div>
 
               <div class="email">
@@ -870,11 +870,11 @@ We have many other attractive features available in our app so stay tuned for fu
                 <p>support@rapidpark.in</p>
               </div>
 
-              <div class="phone">
+              <!-- <div class="phone">
                 <i class="bi bi-phone"></i>
                 <h4>Call:</h4>
                 <p>+1 5589 55488 55s</p>
-              </div>
+              </div> -->
 
             </div>
 
@@ -891,8 +891,13 @@ We have many other attractive features available in our app so stay tuned for fu
                   <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
                 </div>
               </div>
-              <div class="form-group mt-3">
+              <div class="row">
+              <div class="form-group col-md-6">
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Contact Number">
+              </div>
               </div>
               <div class="form-group mt-3">
                 <textarea class="form-control" name="message" id="messageContent" rows="5" placeholder="Message" required></textarea>
@@ -1030,9 +1035,10 @@ We have many other attractive features available in our app so stay tuned for fu
             var name = getInputVal('name');
             var email = getInputVal('email');
             var subject = getInputVal('subject');
+            var phoneNumber = getInputVal('phoneNumber');
             var messageContent = getInputVal('messageContent');
   
-            saveMessage(name, email, subject, messageContent);
+            saveMessage(name, email, subject, messageContent, phoneNumber);
             document.getElementById('contactForm').reset();
         }
   
@@ -1042,13 +1048,14 @@ We have many other attractive features available in our app so stay tuned for fu
         }
   
         // Save message to firebase
-        function saveMessage(name, email, subject, messageContent) {
+        function saveMessage(name, email, subject, messageContent, phoneNumber) {
           console.log("Inside Save Message.");
             var newMessageRef = messagesRef.push();
             newMessageRef.set({
                 name: name,
                 email: email,
                 subject: subject,
+                phoneNumber: phoneNumber,
                 messageContent: messageContent
             });
         }
