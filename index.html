@@ -72,7 +72,7 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li> -->
-          <li><a class="nav-link scrollto" href="#bookingsection">Rent Out</a></li>
+          <li><a class="nav-link scrollto" href="#rentoutSection">Rent Out</a></li>
           <li><a class="nav-link scrollto" href="#faq">FAQs</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           <li><a class="getstarted scrollto" href="#bookingsection">Book Parking</a></li>
@@ -299,6 +299,63 @@ We have many other attractive features available in our app so stay tuned for fu
 
       </div>
     </section>
+    
+    
+    <section id="rentoutSection" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Rent Out Parking</h2>
+           </div>
+
+        <div class="row mt-8">
+
+          <div class="col-lg-12 mt-5 mt-lg-0">
+
+            <form  id="rentout" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="ownerName" class="form-control" id="ownerName" placeholder="Owner Name" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" name="ownerPhoneNumber" id="ownerPhoneNumber" placeholder="Owner Contact Number" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" name="parkingCapacity" id="parkingCapacity" placeholder="Pakring Capacity (Car/Bike)" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" name="parkingPrice" id="parkingPrice" placeholder="Parking Price (Car/Bike)" required>
+                </div>
+                </div>
+              <div class="row">
+                <select class="form-select" name="parkingType" id="parkingType" aria-label="Default select example" required>
+                  <option selected>Select Parking type</option>
+                  <option value="2-wheeler">Sheltered</option>
+                  <option value="4-wheeler">UnSheltered</option>
+                </select>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="fullAddress" id="fullAddress" rows="5" placeholder="Full Address with Pincode" required></textarea>
+              </div>
+            
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your response has been recorded. We will reach out to you asap!</div>
+              </div>
+              <div class="text-center"><button type="submit">Rent Out</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    
+    
 
     <!-- ======= Clients Section ======= -->
     <section id="clients" class="clients section-bg">
@@ -1084,11 +1141,14 @@ We have many other attractive features available in our app so stay tuned for fu
 
   var messagesRef = firebase.database().ref('Collected Data');
   var bookingRef = firebase.database().ref('Bookings');
+  var rentOutRef = firebase.database().ref('RentOut');
           
         document.getElementById('contactForm')
             .addEventListener('submit', submitForm);
   document.getElementById('bookings')
             .addEventListener('submit', bookings);
+  document.getElementById('rentout')
+            .addEventListener('submit', rentOut);
   
         function submitForm(e) {
             e.preventDefault();
@@ -1115,6 +1175,21 @@ We have many other attractive features available in our app so stay tuned for fu
 
           saveBooking(startTime, endTime, vehicleType, address, phoneNumber);
          document.getElementById('bookings').reset();
+        }
+  
+  function rentOut(e) {
+          e.preventDefault();
+
+          // Get values
+            var ownerName = getInputVal('ownerName');
+            var parkingCapacity = getInputVal('parkingCapacity');
+            var parkingPrice = getInputVal('parkingPrice');
+            var ownerPhoneNumber = getInputVal('ownerPhoneNumber');
+            var parkingType = getInputVal('parkingType');
+            var fullAddress = getInputVal('fullAddress');
+
+          saveParking(ownerName, parkingCapacity, parkingPrice, ownerPhoneNumber, parkingType, fullAddress);
+          document.getElementById('rentout').reset();
         }
   
         // Function to get get form values
@@ -1144,6 +1219,20 @@ We have many other attractive features available in our app so stay tuned for fu
               vehicleType: vehicleType,
               address: address,
               phoneNumber: phoneNumber
+            });
+        }
+  
+  // Save message to firebase
+        function saveParking(ownerName, parkingCapacity, parkingPrice, ownerPhoneNumber, parkingType, fullAddress) {
+          console.log("Inside Save Message.");
+            var newRentOutRef = rentOutRef.push();
+            newRentOutRef.set({
+              ownerName: ownerName,
+              parkingCapacity: parkingCapacity,
+              parkingPrice: parkingPrice,
+              ownerPhoneNumber: ownerPhoneNumber,
+              parkingType: parkingType,
+              fullAddress: fullAddress
             });
         }
 </script>
