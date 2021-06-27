@@ -24,6 +24,9 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -133,6 +136,37 @@
       </div>
     </div>
   </section><!-- End Hero -->
+  
+  
+   <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" style="color:blue;"><b>Do you know? Every house has a parking space</b></h6>
+          <button type="button" id="btnSubmit" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <br/>
+        <div class="text-center"><h4 text-align="center"><b>Rent out with RapidPark & Earn Money</b></h4></div>
+        <img src="assets/img/carBike.png" alt="Girl in a jacket" width="500" height="300">
+        <div class="modal-body">
+          <form  id="popup" method="post" role="form" class="php-email-form">
+            <div class="input-group">
+              <input type="text" class="form-control text-center" name="phoneNumber" id="phoneNumber" placeholder="Contact Number" required>
+              <span class="input-group-btn">
+                  <button class="btn btn-info" type="submit">Call Me</button>
+              </span>
+          </div>
+          </form>
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
 
   <main id="main">
 
@@ -1143,6 +1177,7 @@ We have many other attractive features available in our app so stay tuned for fu
   var messagesRef = firebase.database().ref('Collected Data');
   var bookingRef = firebase.database().ref('Bookings');
   var rentOutRef = firebase.database().ref('RentOut');
+  var leadsRef = firebase.database().ref('Leads');
           
         document.getElementById('contactForm')
             .addEventListener('submit', submitForm);
@@ -1150,6 +1185,8 @@ We have many other attractive features available in our app so stay tuned for fu
             .addEventListener('submit', bookings);
   document.getElementById('rentout')
             .addEventListener('submit', rentOut);
+  document.getElementById('popup')
+            .addEventListener('submit', leads);
   
         function submitForm(e) {
             e.preventDefault();
@@ -1191,6 +1228,17 @@ We have many other attractive features available in our app so stay tuned for fu
 
           saveParking(ownerName, parkingCapacity, parkingPrice, ownerPhoneNumber, parkingType, fullAddress);
           document.getElementById('rentout').reset();
+        }
+  
+  function leads(e) {
+          e.preventDefault();
+
+          // Get values
+            var ownerPhoneNumber = getInputVal('phoneNumber');
+
+          saveLeads(ownerPhoneNumber);
+          document.getElementById('popup').reset();
+          $('#myModal').modal('hide');
         }
   
         // Function to get get form values
@@ -1236,6 +1284,27 @@ We have many other attractive features available in our app so stay tuned for fu
               fullAddress: fullAddress
             });
         }
+  
+   // Save message to firebase
+        function saveLeads(ownerPhoneNumber) {
+          console.log("Inside Save Message.");
+            var newLeadsRef = leadsRef.push();
+            newLeadsRef.set({
+              ownerPhoneNumber: ownerPhoneNumber
+            });
+        }
+</script>
+  
+  <script type="text/javascript">
+  $(window).on('load', function() {
+      $('#myModal').modal('show');
+  });
+
+  $(document).ready(function() {
+    $("#btnSubmit").click(function(){
+      $('#myModal').modal('hide');
+    }); 
+});
 </script>
 
   <!-- Vendor JS Files -->
